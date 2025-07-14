@@ -153,6 +153,7 @@ function isApproved(code) {
 }
 
 function canUnlock(course) {
+    if (!course.prereqs || course.prereqs.length === 0) return true;
     if (course.prereqs === "ALL") {
         return malla.every(y => y.semesters.every(s => s.courses.every(c => isApproved(c.code))));
     }
