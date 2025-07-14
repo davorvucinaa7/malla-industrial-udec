@@ -24,12 +24,60 @@ const malla = [
             }
         ]
     },
-    // Continúa con 2º, 3º, 4º y 5º año igual que el detalle que te di antes...
+    {
+        year: "2º Año",
+        semesters: [
+            {
+                semester: "3º Semestre",
+                courses: [
+                    { code: "521227", name: "Cálculo III", credits: 5, prereqs: ["525150", "527150"] },
+                    { code: "503203", name: "Programación", credits: 3, prereqs: ["525140"] },
+                    { code: "523219", name: "Estadística", credits: 4, prereqs: ["527150", "525140"] },
+                    { code: "525223", name: "Ecuaciones Diferenciales", credits: 4, prereqs: ["525150", "527150"] },
+                    { code: "890050", name: "Inglés Comunicativo Nivel Básico I", credits: 5, prereqs: [] }
+                ]
+            },
+            {
+                semester: "4º Semestre",
+                courses: [
+                    { code: "890051", name: "Inglés Comunicativo Nivel Básico II", credits: 5, prereqs: ["890050"] },
+                    { code: "580211", name: "Modelación de Sistemas", credits: 2, prereqs: ["510140", "525140", "527140", "531140", "580120"] },
+                    { code: "521230", name: "Cálculo Numérico", credits: 4, prereqs: ["521227", "503203"] },
+                    { code: "541271", name: "Mecánica", credits: 3, prereqs: ["521227", "510150"] },
+                    { code: "541203", name: "Termodinámica", credits: 4, prereqs: ["510150"] }
+                ]
+            }
+        ]
+    },
+    {
+        year: "3º Año",
+        semesters: [
+            {
+                semester: "5º Semestre",
+                courses: [
+                    { code: "580315", name: "Optimización I", credits: 3, prereqs: ["521227", "503203"] },
+                    { code: "541340", name: "Mecánica de Fluidos", credits: 4, prereqs: ["541271", "541203"] },
+                    { code: "580490", name: "Práctica Laboral", credits: 2, prereqs: [] },
+                    { code: "543355", name: "Máquinas Eléctricas", credits: 4, prereqs: ["525223"] },
+                    { code: "580310", name: "Microeconomía", credits: 4, prereqs: ["523219"] }
+                ]
+            },
+            {
+                semester: "6º Semestre",
+                courses: [
+                    { code: "580311", name: "Análisis Estadístico Multivariado", credits: 3, prereqs: ["523325"] },
+                    { code: "580325", name: "Optimización II", credits: 3, prereqs: ["580315"] },
+                    { code: "580327", name: "Simulación", credits: 3, prereqs: ["580311", "580315"] },
+                    { code: "542355", name: "Transferencia de Calor", credits: 4, prereqs: ["541340"] },
+                    { code: "580321", name: "Administración", credits: 3, prereqs: ["580211"] }
+                ]
+            }
+        ]
+    },
+    // Continúa con 4º, 5º y 6º año de igual forma...
 ];
 
 const mallaContainer = document.getElementById("malla");
-
-// Cargar progreso guardado
 let progress = JSON.parse(localStorage.getItem("mallaProgress")) || {};
 
 function saveProgress() {
