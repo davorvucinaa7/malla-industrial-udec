@@ -1,19 +1,19 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #e0f7fa; /* Celeste suave */
     color: #333;
 }
 
 header {
-    background-color: #333;
+    background-color: #0277bd; /* Azul profundo */
     color: white;
     text-align: center;
     padding: 1rem 0;
 }
 
 h2 {
-    background-color: #555;
+    background-color: #0288d1; /* Azul un poco más claro */
     color: white;
     padding: 0.5rem;
     margin: 1rem 0 0.5rem;
@@ -22,11 +22,7 @@ h2 {
 
 h3 {
     margin: 0.5rem 0;
-    color: #444;
-}
-
-#main {
-    padding: 1rem;
+    color: #01579b;
 }
 
 .year {
@@ -44,13 +40,14 @@ h3 {
 }
 
 .course {
-    background: #ddd;
-    border: 1px solid #aaa;
-    border-radius: 5px;
+    background: #eeeeee; /* Gris claro por defecto */
+    border: 2px solid #bdbdbd;
+    border-radius: 8px;
     padding: 10px;
     text-align: center;
     cursor: pointer;
-    transition: background 0.3s, color 0.3s, transform 0.2s;
+    transition: all 0.3s ease;
+    font-weight: bold;
 }
 
 .course:hover {
@@ -58,13 +55,6 @@ h3 {
 }
 
 .course.approved {
-    background: #4caf50;
+    background: #0288d1; /* Azul brillante para aprobados */
     color: white;
-    border-color: #388e3c;
-}
-
-.course.locked {
-    background: #ccc;
-    color: #777;
-    cursor: not-allowed;
-}
+    border-color: #01579b;
