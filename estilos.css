@@ -10,19 +10,22 @@ header {
     color: white;
     text-align: center;
     padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 h2 {
-    background-color: #0288d1; /* Azul un poco más claro */
+    background-color: #0288d1; /* Azul medio */
     color: white;
     padding: 0.5rem;
     margin: 1rem 0 0.5rem;
     border-radius: 5px;
+    text-align: center;
 }
 
 h3 {
     margin: 0.5rem 0;
     color: #01579b;
+    text-align: center;
 }
 
 .year {
@@ -37,6 +40,7 @@ h3 {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 10px;
+    padding: 0 1rem;
 }
 
 .course {
@@ -48,6 +52,7 @@ h3 {
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .course:hover {
@@ -55,6 +60,18 @@ h3 {
 }
 
 .course.approved {
-    background: #0288d1; /* Azul brillante para aprobados */
+    background: #0288d1; /* Azul brillante cuando aprobado */
     color: white;
     border-color: #01579b;
+}
+
+.course.locked {
+    background: #cfd8dc; /* Gris más oscuro para bloqueados */
+    color: #757575;
+    cursor: not-allowed;
+    border-color: #b0bec5;
+}
+
+.course:not(.locked):hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
