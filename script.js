@@ -74,7 +74,71 @@ const malla = [
             }
         ]
     },
-    // Continúa con 4º, 5º y 6º año de igual forma...
+    {
+        year: "4º Año",
+        semesters: [
+            {
+                semester: "7º Semestre",
+                courses: [
+                    { code: "580323", name: "Macroeconomía", credits: 3, prereqs: ["580310"] },
+                    { code: "580413", name: "Marketing", credits: 3, prereqs: ["580321"] },
+                    { code: "580414", name: "Contabilidad General y de Costos", credits: 3, prereqs: ["580321"] },
+                    { code: "580415", name: "Gestión Estratégica y Control de Gestión", credits: 4, prereqs: ["580321"] },
+                    { code: "540451", name: "Procesos Industriales", credits: 3, prereqs: ["542355"] }
+                ]
+            },
+            {
+                semester: "8º Semestre",
+                courses: [
+                    { code: "580423", name: "Gestión y Control de Calidad", credits: 3, prereqs: ["580311"] },
+                    { code: "580425", name: "Ingeniería Económica", credits: 3, prereqs: ["580414"] },
+                    { code: "580429", name: "Finanzas", credits: 4, prereqs: ["580414"] },
+                    { code: "580421", name: "Planificación y Control de Producción", credits: 4, prereqs: ["580327"] },
+                    { code: "201", name: "Complementaria I", credits: 2, prereqs: [] }
+                ]
+            }
+        ]
+    },
+    {
+        year: "5º Año",
+        semesters: [
+            {
+                semester: "9º Semestre",
+                courses: [
+                    { code: "580512", name: "Diseño de Sistemas de Producción", credits: 3, prereqs: ["580315"] },
+                    { code: "580513", name: "Evaluación de Proyectos", credits: 3, prereqs: ["580425"] },
+                    { code: "580514", name: "Gestión de Personas y Comportamiento Organizacional", credits: 3, prereqs: ["580321"] },
+                    { code: "202", name: "Complementaria II", credits: 2, prereqs: [] },
+                    { code: "580590", name: "Práctica Profesional", credits: 4, prereqs: ["580490"] }
+                ]
+            },
+            {
+                semester: "10º Semestre",
+                courses: [
+                    { code: "580525", name: "Dirección y Control de Proyectos", credits: 3, prereqs: ["580513"] },
+                    { code: "580523", name: "Taller de Emprendimiento", credits: 3, prereqs: ["580513"] },
+                    { code: "580521", name: "Logística", credits: 3, prereqs: ["580327"] },
+                    { code: "101", name: "Electivo I", credits: 3, prereqs: [] },
+                    { code: "102", name: "Electivo II", credits: 3, prereqs: [] },
+                    { code: "103", name: "Electivo III", credits: 3, prereqs: [] },
+                    { code: "104", name: "Electivo IV", credits: 3, prereqs: [] },
+                    { code: "105", name: "Electivo V", credits: 3, prereqs: [] },
+                    { code: "106", name: "Electivo VI", credits: 3, prereqs: [] }
+                ]
+            }
+        ]
+    },
+    {
+        year: "6º Año",
+        semesters: [
+            {
+                semester: "11º Semestre",
+                courses: [
+                    { code: "580695", name: "Memoria de Título", credits: 20, prereqs: "ALL" }
+                ]
+            }
+        ]
+    }
 ];
 
 const mallaContainer = document.getElementById("malla");
