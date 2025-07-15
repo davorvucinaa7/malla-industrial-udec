@@ -5,6 +5,12 @@ body {
     color: #333;
 }
 
+.header-container {
+    position: sticky; /* Hace que todo el bloque quede fijo */
+    top: 0;
+    z-index: 20;
+}
+
 header {
     background-color: #0277bd; /* Azul profundo */
     color: white;
@@ -21,9 +27,6 @@ header {
     background-color: #ffffff;
     padding: 0.5rem 1rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    position: sticky; /* Siempre visible al hacer scroll */
-    top: 0;
-    z-index: 10;
 }
 
 .legend-item {
@@ -35,11 +38,11 @@ header {
 }
 
 .legend-item.approved {
-    background-color: #FF7043; /* Naranja (aprobada) */
+    background-color: #FF7043; /* Naranja (Aprobada) */
 }
 
 .legend-item.in-progress {
-    background-color: #4DB6AC; /* Verde turquesa (inscrita) */
+    background-color: #4DB6AC; /* Verde turquesa (Inscrita) */
 }
 
 h2 {
