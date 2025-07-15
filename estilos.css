@@ -13,6 +13,35 @@ header {
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
+.legend {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    background-color: #ffffff;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky; /* Siempre visible al hacer scroll */
+    top: 0;
+    z-index: 10;
+}
+
+.legend-item {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    margin-right: 0.3rem;
+}
+
+.legend-item.approved {
+    background-color: #FF7043; /* Naranja (aprobada) */
+}
+
+.legend-item.in-progress {
+    background-color: #4DB6AC; /* Verde turquesa (inscrita) */
+}
+
 h2 {
     background-color: #0288d1; /* Azul medio */
     color: white;
@@ -60,13 +89,13 @@ h3 {
 }
 
 .course.in-progress {
-    background: #4DB6AC; /* Verde turquesa (Innovación) */
+    background: #4DB6AC; /* Verde turquesa (Inscrita) */
     color: white;
     border-color: #00796B;
 }
 
 .course.approved {
-    background: #FF7043; /* Naranja (Dibujo Industrial) */
+    background: #FF7043; /* Naranja (Aprobada) */
     color: white;
     border-color: #E64A19;
 }
@@ -75,4 +104,9 @@ h3 {
     background: #cfd8dc; /* Gris más oscuro para bloqueados */
     color: #757575;
     cursor: not-allowed;
-    border-color: #b0
+    border-color: #b0bec5;
+}
+
+.course:not(.locked):hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
