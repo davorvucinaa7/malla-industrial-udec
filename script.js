@@ -163,7 +163,7 @@ function isApproved(code) {
 }
 
 function canUnlock(course) {
-    if (!course.prereqs || course.prereqs.length === 0) return true; // sin prerrequisitos
+    if (!course.prereqs || course.prereqs.length === 0) return true;
     if (course.prereqs === "ALL") {
         return malla.every(year =>
             year.semesters.every(sem =>
@@ -191,6 +191,23 @@ function toggleCourse(course) {
 }
 
 function renderMalla() {
+    // Contar ramos aprobados y total
+    let approvedCount = 0;
+    let totalCourses = 0;
+
+    malla.forEach(year =>
+        year.semesters.forEach(sem =>
+            sem.courses.forEach(course => {
+                totalCourses++;
+                if (isApproved(course.code)) approvedCount++;
+            })
+        )
+    );
+
+    // Actualizar el título del header
+    const headerTitle = document.querySelector("header h1");
+    headerTitle.textContent = `Malla Interactiva - Ingeniería Civil Industrial (${approvedCount}/${totalCourses} ramos aprobados)`;
+
     mallaContainer.innerHTML = "";
     malla.forEach(year => {
         const yearDiv = document.createElement("div");
@@ -227,7 +244,10 @@ function renderMalla() {
                     div.classList.add("locked");
                 }
 
-                div.addEventListener("click", () => toggleCourse(course));
+                if (canUnlock(course)) {
+                    div.addEventListener("click", () => toggleCourse(course));
+                }
+
                 grid.appendChild(div);
             });
 
