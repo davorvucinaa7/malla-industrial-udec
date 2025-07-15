@@ -76,29 +76,20 @@ h3 {
 }
 
 .course {
-    background: #eeeeee; /* Gris claro por defecto */
-    border: 2px solid #bdbdbd;
+    background: #90a4ae; /* 🔥 Gris azulado uniforme */
+    border: 2px solid #607d8b; /* Borde más oscuro */
     border-radius: 8px;
     padding: 10px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: bold;
+    color: white; /* 🔥 Texto blanco para contraste */
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    min-height: 100px; /* 🔥 altura uniforme */
+    min-height: 100px; /* Altura mínima para alinear nombre y créditos */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* 🔥 nombre arriba, créditos abajo */
-}
-
-.course-name {
-    font-size: 1rem;
-    margin-bottom: 5px;
-}
-
-.course-credits {
-    font-size: 0.9rem;
-    color: white;
+    justify-content: space-between;
 }
 
 .course:hover {
@@ -118,12 +109,20 @@ h3 {
 }
 
 .course.locked {
-    background: #cfd8dc; /* Gris más oscuro para bloqueados */
-    color: #757575;
-    cursor: not-allowed;
-    border-color: #b0bec5;
+    opacity: 0.6;            /* 🔥 Atenuado para bloqueados */
+    cursor: not-allowed;     /* 🔒 Cursor bloqueado */
 }
 
 .course:not(.locked):hover {
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.course-name {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.course-credits {
+    font-size: 0.9rem;
+    color: white;
 }
