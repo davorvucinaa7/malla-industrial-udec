@@ -154,8 +154,12 @@ function saveProgress() {
     localStorage.setItem("mallaProgress", JSON.stringify(progress));
 }
 
+function isInProgress(code) {
+    return progress[code] === "inProgress";
+}
+
 function isApproved(code) {
-    return progress[code] === true;
+    return progress[code] === "approved";
 }
 
 function canUnlock(course) {
@@ -167,8 +171,19 @@ function canUnlock(course) {
 }
 
 function toggleCourse(course, div) {
-    if (!canUnlock(course) && !isApproved(course.code)) return;
-    progress[course.code] = !isApproved(course.code);
+    if (!canUnlock(course)) {
+        alert("Este ramo está bloqueado. Primero debes aprobar los prerrequisitos.");
+        return;
+    }
+
+    if (!progress[course.code]) {
+        progress[course.code] = "inProgress"; // Primer clic
+    } else if (isInProgress(course.code)) {
+        progress[course.code] = "approved"; // Segundo clic
+    } else if (isApproved(course.code)) {
+        delete progress[course.code]; // Tercer clic
+    }
+
     saveProgress();
     renderMalla();
 }
@@ -201,6 +216,8 @@ function renderMalla() {
 
                 if (isApproved(course.code)) {
                     div.classList.add("approved");
+                } else if (isInProgress(course.code)) {
+                    div.classList.add("in-progress");
                 } else if (!canUnlock(course)) {
                     div.classList.add("locked");
                 }
