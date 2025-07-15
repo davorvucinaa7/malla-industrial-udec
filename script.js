@@ -176,7 +176,7 @@ function canUnlock(course) {
     if (Array.isArray(course.prereqs)) {
         return course.prereqs.every(code => isApproved(code));
     }
-    return false; // Bloqueado por defecto
+    return false; // Bloqueado
 }
 
 function toggleCourse(course, div) {
@@ -186,11 +186,11 @@ function toggleCourse(course, div) {
     }
 
     if (!progress[course.code]) {
-        progress[course.code] = "inProgress"; // Primer clic
+        progress[course.code] = "inProgress";
     } else if (isInProgress(course.code)) {
-        progress[course.code] = "approved"; // Segundo clic
+        progress[course.code] = "approved";
     } else if (isApproved(course.code)) {
-        delete progress[course.code]; // Tercer clic
+        delete progress[course.code];
     }
 
     saveProgress();
