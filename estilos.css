@@ -59,25 +59,20 @@ h3 {
     transform: scale(1.05);
 }
 
-.course.approved {
-    background: #0288d1; /* Azul brillante cuando aprobado */
+.course.in-progress {
+    background: #4DB6AC; /* Verde turquesa (Innovación) */
     color: white;
-    border-color: #01579b;
+    border-color: #00796B;
 }
 
-.course.in-progress {
-    background: #757575; /* Gris oscuro cuando cursando */
+.course.approved {
+    background: #FF7043; /* Naranja (Dibujo Industrial) */
     color: white;
-    border-color: #424242;
+    border-color: #E64A19;
 }
 
 .course.locked {
     background: #cfd8dc; /* Gris más oscuro para bloqueados */
     color: #757575;
     cursor: not-allowed;
-    border-color: #b0bec5;
-}
-
-.course:not(.locked):hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
+    border-color: #b0
