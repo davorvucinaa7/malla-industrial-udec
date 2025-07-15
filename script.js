@@ -82,7 +82,10 @@ function canUnlock(course) {
 }
 
 function toggleCourse(course, div) {
-    if (!canUnlock(course)) return; // Solo permitir si está desbloqueado
+   if (!canUnlock(course)) {
+    alert("Este ramo está bloqueado. Primero debes aprobar los prerrequisitos.");
+    return;
+}
 
     if (!progress[course.code]) {
         progress[course.code] = "inProgress";
