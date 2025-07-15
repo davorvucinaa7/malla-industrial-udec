@@ -24,34 +24,7 @@ const malla = [
             }
         ]
     },
-    {
-        year: "2º Año",
-        semesters: [
-            {
-                semester: "3º Semestre",
-                courses: [
-                    { code: "521227", name: "Cálculo III", credits: 5, prereqs: ["525150", "527150"] },
-                    { code: "503203", name: "Programación", credits: 3, prereqs: ["525140"] },
-                    { code: "523219", name: "Estadística", credits: 4, prereqs: ["525140", "527150"] },
-                    { code: "525223", name: "Ecuaciones Diferenciales", credits: 4, prereqs: ["525150", "527150"] },
-                    { code: "890050", name: "Inglés Comunicativo Nivel Básico I", credits: 5, prereqs: [] },
-                    { code: "580201", name: "Liderazgo y Trabajo en Equipo", credits: 2, prereqs: ["580120"] }
-                ]
-            },
-            {
-                semester: "4º Semestre",
-                courses: [
-                    { code: "890051", name: "Inglés Comunicativo Nivel Básico II", credits: 5, prereqs: ["890050"] },
-                    { code: "580211", name: "Modelación de Sistemas", credits: 2, prereqs: ["510140", "525140", "527140", "531140", "580120"] },
-                    { code: "521230", name: "Cálculo Numérico", credits: 4, prereqs: ["521227", "503203"] },
-                    { code: "541271", name: "Mecánica", credits: 3, prereqs: ["521227", "510150"] },
-                    { code: "541203", name: "Termodinámica", credits: 4, prereqs: ["510150"] },
-                    { code: "523325", name: "Inferencia Estadística y Muestreo", credits: 4, prereqs: ["523219"] }
-                ]
-            }
-        ]
-    },
-    // ... resto de la malla ...
+    // ... el resto de los años igual ...
 ];
 
 const mallaContainer = document.getElementById("malla");
@@ -70,36 +43,29 @@ function isApproved(code) {
 }
 
 function canUnlock(course) {
-    if (Array.isArray(course.prereqs) && course.prereqs.length === 0) {
-        // Sin prerequisitos
-        return true;
-    }
+    if (!course.prereqs || course.prereqs.length === 0) return true; // Sin prereqs
     if (course.prereqs === "ALL") {
-        return malla.every(y =>
-            y.semesters.every(s =>
-                s.courses.every(c => isApproved(c.code))
+        return malla.every(year =>
+            year.semesters.every(sem =>
+                sem.courses.every(c => isApproved(c.code))
             )
         );
     }
-    if (Array.isArray(course.prereqs)) {
-        return course.prereqs.every(code => isApproved(code));
+    return course.prereqs.every(code => isApproved(code));
+}
+
+function toggleCourse(course) {
+    if (!canUnlock(course)) {
+        alert("Este ramo está bloqueado. Debes aprobar los prerrequisitos.");
+        return;
     }
-    return false; // Si llega aquí, está bloqueado
-}
-
-
-function toggleCourse(course, div) {
-   if (!canUnlock(course)) {
-    alert("Este ramo está bloqueado. Primero debes aprobar los prerrequisitos.");
-    return;
-}
 
     if (!progress[course.code]) {
-        progress[course.code] = "inProgress";
+        progress[course.code] = "inProgress"; // Primer clic
     } else if (progress[course.code] === "inProgress") {
-        progress[course.code] = "approved";
+        progress[course.code] = "approved"; // Segundo clic
     } else if (progress[course.code] === "approved") {
-        delete progress[course.code];
+        delete progress[course.code]; // Tercer clic
     }
 
     saveProgress();
@@ -140,7 +106,7 @@ function renderMalla() {
                     div.classList.add("locked");
                 }
 
-                div.addEventListener("click", () => toggleCourse(course, div));
+                div.addEventListener("click", () => toggleCourse(course));
                 grid.appendChild(div);
             });
 
