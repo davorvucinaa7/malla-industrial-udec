@@ -163,18 +163,15 @@ function isApproved(code) {
 }
 
 function canUnlock(course) {
-    if (Array.isArray(course.prereqs) && course.prereqs.length === 0) return true;
+    if (!course.prereqs || course.prereqs.length === 0) return true; // sin prerequisitos
     if (course.prereqs === "ALL") {
-        return malla.every(y =>
-            y.semesters.every(s =>
-                s.courses.every(c => isApproved(c.code))
+        return malla.every(year =>
+            year.semesters.every(sem =>
+                sem.courses.every(c => isApproved(c.code))
             )
         );
     }
-    if (Array.isArray(course.prereqs)) {
-        return course.prereqs.every(code => isApproved(code));
-    }
-    return false;
+    return course.prereqs.every(code => isApproved(code));
 }
 
 function toggleCourse(course) {
@@ -182,22 +179,19 @@ function toggleCourse(course) {
         alert("Este ramo está bloqueado. Primero debes aprobar los prerrequisitos.");
         return;
     }
-
     if (!progress[course.code]) {
         progress[course.code] = "inProgress";
     } else if (isInProgress(course.code)) {
         progress[course.code] = "approved";
-    } else if (isApproved(course.code)) {
+    } else {
         delete progress[course.code];
     }
-
     saveProgress();
     renderMalla();
 }
 
 function renderMalla() {
     mallaContainer.innerHTML = "";
-
     malla.forEach(year => {
         const yearDiv = document.createElement("div");
         yearDiv.className = "year";
