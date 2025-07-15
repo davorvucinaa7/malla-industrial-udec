@@ -1,77 +1,69 @@
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #e0f7fa; /* Celeste suave */
+    background-color: #f4f4f4;
     color: #333;
+    margin: 0;
+    padding: 20px;
 }
 
-header {
-    background-color: #0277bd; /* Azul profundo */
-    color: white;
+h1 {
     text-align: center;
-    padding: 1rem 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-h2 {
-    background-color: #0288d1; /* Azul medio */
-    color: white;
-    padding: 0.5rem;
-    margin: 1rem 0 0.5rem;
-    border-radius: 5px;
-    text-align: center;
-}
-
-h3 {
-    margin: 0.5rem 0;
-    color: #01579b;
-    text-align: center;
+    margin-bottom: 30px;
 }
 
 .year {
-    margin-bottom: 2rem;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.year h2 {
+    background-color: #ddd;
+    padding: 10px;
+    border-radius: 6px;
 }
 
 .semester {
-    margin-bottom: 1rem;
+    margin-bottom: 15px;
+}
+
+.semester h3 {
+    color: #555;
+    margin-bottom: 10px;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 10px;
-    padding: 0 1rem;
 }
 
 .course {
-    background: #eeeeee; /* Gris claro por defecto */
-    border: 2px solid #bdbdbd;
-    border-radius: 8px;
     padding: 10px;
-    text-align: center;
+    border: 1px solid #999;
+    border-radius: 6px;
+    background-color: #eee;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .course:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
 .course.approved {
-    background: #0288d1; /* Azul brillante cuando aprobado */
-    color: white;
-    border-color: #01579b;
+    background-color: #4CAF50; /* Verde */
+    color: #fff;
+}
+
+.course.in-progress {
+    background-color: #555; /* Gris oscuro */
+    color: #fff;
 }
 
 .course.locked {
-    background: #cfd8dc; /* Gris más oscuro para bloqueados */
-    color: #757575;
+    opacity: 0.5;
     cursor: not-allowed;
-    border-color: #b0bec5;
-}
-
-.course:not(.locked):hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
