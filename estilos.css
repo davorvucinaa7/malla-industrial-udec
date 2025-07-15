@@ -85,10 +85,20 @@ h3 {
     transition: all 0.3s ease;
     font-weight: bold;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    min-height: 80px; /* 🔥 Altura mínima uniforme */
-    display: flex;        /* 🔥 Para centrar contenido */
+    min-height: 100px; /* 🔥 altura uniforme */
+    display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between; /* 🔥 nombre arriba, créditos abajo */
+}
+
+.course-name {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.course-credits {
+    font-size: 0.9rem;
+    color: white;
 }
 
 .course:hover {
@@ -113,11 +123,6 @@ h3 {
     cursor: not-allowed;
     border-color: #b0bec5;
 }
-
-.course:not(.locked):hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
 
 .course:not(.locked):hover {
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
