@@ -163,9 +163,7 @@ function isApproved(code) {
 }
 
 function canUnlock(course) {
-    if (Array.isArray(course.prereqs) && course.prereqs.length === 0) {
-        return true; // Sin prerequisitos
-    }
+    if (Array.isArray(course.prereqs) && course.prereqs.length === 0) return true;
     if (course.prereqs === "ALL") {
         return malla.every(y =>
             y.semesters.every(s =>
@@ -176,10 +174,10 @@ function canUnlock(course) {
     if (Array.isArray(course.prereqs)) {
         return course.prereqs.every(code => isApproved(code));
     }
-    return false; // Bloqueado
+    return false;
 }
 
-function toggleCourse(course, div) {
+function toggleCourse(course) {
     if (!canUnlock(course)) {
         alert("Este ramo está bloqueado. Primero debes aprobar los prerrequisitos.");
         return;
@@ -199,6 +197,7 @@ function toggleCourse(course, div) {
 
 function renderMalla() {
     mallaContainer.innerHTML = "";
+
     malla.forEach(year => {
         const yearDiv = document.createElement("div");
         yearDiv.className = "year";
@@ -231,7 +230,7 @@ function renderMalla() {
                     div.classList.add("locked");
                 }
 
-                div.addEventListener("click", () => toggleCourse(course, div));
+                div.addEventListener("click", () => toggleCourse(course));
                 grid.appendChild(div);
             });
 
