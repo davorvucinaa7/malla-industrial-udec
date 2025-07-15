@@ -31,7 +31,7 @@ const malla = [
                 semester: "3º Semestre",
                 courses: [
                     { code: "521227", name: "Cálculo III", credits: 5, prereqs: ["525150", "527150"] },
-                    { code: "503203", name: "Programación", credits: 3, prereqs: ["525140"] },
+                    { code: "503203", name: "Programación", credits: 3, prereqs: ["525140", { type: "credits", value: 37 }] },
                     { code: "523219", name: "Estadística", credits: 4, prereqs: ["525140", "527150"] },
                     { code: "525223", name: "Ecuaciones Diferenciales", credits: 4, prereqs: ["525150", "527150"] },
                     { code: "890050", name: "Inglés Comunicativo Nivel Básico I", credits: 5, prereqs: [] },
@@ -42,10 +42,10 @@ const malla = [
                 semester: "4º Semestre",
                 courses: [
                     { code: "890051", name: "Inglés Comunicativo Nivel Básico II", credits: 5, prereqs: ["890050"] },
-                    { code: "580211", name: "Modelación de Sistemas", credits: 2, prereqs: ["510140", "525140", "527140", "531140", "580120"] },
+                    { code: "580211", name: "Modelación de Sistemas", credits: 2, prereqs: [{ type: "semester", value: 1 }] },
                     { code: "521230", name: "Cálculo Numérico", credits: 4, prereqs: ["521227", "503203"] },
                     { code: "541271", name: "Mecánica", credits: 3, prereqs: ["521227", "510150"] },
-                    { code: "541203", name: "Termodinámica", credits: 4, prereqs: ["510150"] },
+                    { code: "541203", name: "Termodinámica", credits: 4, prereqs: ["510150", { type: "credits", value: 37 }] },
                     { code: "523325", name: "Inferencia Estadística y Muestreo", credits: 4, prereqs: ["523219"] }
                 ]
             }
@@ -62,7 +62,7 @@ const malla = [
                     { code: "580310", name: "Microeconomía", credits: 4, prereqs: ["523219"] },
                     { code: "580315", name: "Optimización I", credits: 3, prereqs: ["521227", "503203"] },
                     { code: "580311", name: "Análisis Estadístico Multivariado", credits: 3, prereqs: ["523325"] },
-                    { code: "580490", name: "Práctica Laboral", credits: 2, prereqs: [] }
+                    { code: "580490", name: "Práctica Laboral", credits: 2, prereqs: [{ type: "credits", value: 65 }] }
                 ]
             },
             {
@@ -115,7 +115,7 @@ const malla = [
                     { code: "580512", name: "Diseño de Sistemas de Producción", credits: 3, prereqs: ["580315"] },
                     { code: "580513", name: "Evaluación de Proyectos", credits: 3, prereqs: ["580425"] },
                     { code: "580514", name: "Gestión de Personas y Comportamiento Organizacional", credits: 3, prereqs: ["580321"] },
-                    { code: "580590", name: "Práctica Profesional", credits: 4, prereqs: ["580490"] },
+                    { code: "580590", name: "Práctica Profesional", credits: 4, prereqs: [{ type: "credits", value: 167 }, { type: "semester", value: 8 }] },
                     { code: "101", name: "Electivo I", credits: 3, prereqs: [] },
                     { code: "102", name: "Electivo II", credits: 3, prereqs: [] },
                     { code: "103", name: "Electivo III", credits: 3, prereqs: [] }
@@ -126,7 +126,7 @@ const malla = [
                 courses: [
                     { code: "580525", name: "Dirección y Control de Proyectos", credits: 3, prereqs: ["580513"] },
                     { code: "580523", name: "Taller de Emprendimiento", credits: 3, prereqs: ["580513"] },
-                    { code: "580521", name: "Logística", credits: 3, prereqs: ["580327"] },
+                    { code: "580521", name: "Logística", credits: 3, prereqs: [{ type: "credits", value: 150 }, "580327"] },
                     { code: "104", name: "Electivo IV", credits: 3, prereqs: [] },
                     { code: "105", name: "Electivo V", credits: 3, prereqs: [] },
                     { code: "106", name: "Electivo VI", credits: 3, prereqs: [] }
@@ -162,6 +162,28 @@ function isApproved(code) {
     return progress[code] === "approved";
 }
 
+function totalCredits() {
+    let credits = 0;
+    malla.forEach(year =>
+        year.semesters.forEach(sem =>
+            sem.courses.forEach(course => {
+                if (isApproved(course.code)) credits += course.credits;
+            })
+        )
+    );
+    return credits;
+}
+
+function approvedSemesters() {
+    let count = 0;
+    malla.forEach(year =>
+        year.semesters.forEach(sem => {
+            if (sem.courses.every(c => isApproved(c.code))) count++;
+        })
+    );
+    return count;
+}
+
 function canUnlock(course) {
     if (!course.prereqs || course.prereqs.length === 0) return true;
     if (course.prereqs === "ALL") {
@@ -171,7 +193,16 @@ function canUnlock(course) {
             )
         );
     }
-    return course.prereqs.every(code => isApproved(code));
+    return course.prereqs.every(prereq => {
+        if (typeof prereq === "string") {
+            return isApproved(prereq);
+        } else if (prereq.type === "credits") {
+            return totalCredits() >= prereq.value;
+        } else if (prereq.type === "semester") {
+            return approvedSemesters() >= prereq.value;
+        }
+        return false;
+    });
 }
 
 function toggleCourse(course) {
@@ -191,22 +222,28 @@ function toggleCourse(course) {
 }
 
 function renderMalla() {
-    // Contar ramos aprobados y total
     let approvedCount = 0;
     let totalCourses = 0;
+    let credits = 0;
 
     malla.forEach(year =>
         year.semesters.forEach(sem =>
             sem.courses.forEach(course => {
                 totalCourses++;
-                if (isApproved(course.code)) approvedCount++;
+                if (isApproved(course.code)) {
+                    approvedCount++;
+                    credits += course.credits;
+                }
             })
         )
     );
 
-    // Actualizar el título del header
     const headerTitle = document.querySelector("header h1");
-    headerTitle.textContent = `Malla Interactiva - Ingeniería Civil Industrial (${approvedCount}/${totalCourses} ramos aprobados)`;
+    headerTitle.innerHTML = `
+        Malla Interactiva - Ingeniería Civil Industrial<br>
+        ${approvedCount}/${totalCourses} ramos aprobados<br>
+        ${credits} créditos aprobados
+    `;
 
     mallaContainer.innerHTML = "";
     malla.forEach(year => {
