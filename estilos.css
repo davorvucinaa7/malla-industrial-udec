@@ -65,6 +65,12 @@ h3 {
     border-color: #01579b;
 }
 
+.course.in-progress {
+    background: #757575; /* Gris oscuro cuando cursando */
+    color: white;
+    border-color: #424242;
+}
+
 .course.locked {
     background: #cfd8dc; /* Gris más oscuro para bloqueados */
     color: #757575;
