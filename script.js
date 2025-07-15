@@ -163,7 +163,7 @@ function isApproved(code) {
 }
 
 function canUnlock(course) {
-    if (!course.prereqs || course.prereqs.length === 0) return true; // sin prerequisitos
+    if (!course.prereqs || course.prereqs.length === 0) return true; // sin prerrequisitos
     if (course.prereqs === "ALL") {
         return malla.every(year =>
             year.semesters.every(sem =>
@@ -214,7 +214,10 @@ function renderMalla() {
             sem.courses.forEach(course => {
                 const div = document.createElement("div");
                 div.className = "course";
-                div.textContent = `${course.code} - ${course.name} (${course.credits} créditos)`;
+                div.innerHTML = `
+                    <div class="course-name">${course.code} - ${course.name}</div>
+                    <div class="course-credits">${course.credits} créditos</div>
+                `;
 
                 if (isApproved(course.code)) {
                     div.classList.add("approved");
