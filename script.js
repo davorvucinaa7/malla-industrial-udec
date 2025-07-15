@@ -70,7 +70,10 @@ function isApproved(code) {
 }
 
 function canUnlock(course) {
-    if (!course.prereqs || course.prereqs.length === 0) return true;
+    if (Array.isArray(course.prereqs) && course.prereqs.length === 0) {
+        // Sin prerequisitos
+        return true;
+    }
     if (course.prereqs === "ALL") {
         return malla.every(y =>
             y.semesters.every(s =>
@@ -78,8 +81,12 @@ function canUnlock(course) {
             )
         );
     }
-    return course.prereqs.every(code => isApproved(code));
+    if (Array.isArray(course.prereqs)) {
+        return course.prereqs.every(code => isApproved(code));
+    }
+    return false; // Si llega aquí, está bloqueado
 }
+
 
 function toggleCourse(course, div) {
    if (!canUnlock(course)) {
