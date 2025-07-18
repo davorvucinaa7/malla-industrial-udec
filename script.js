@@ -289,8 +289,8 @@ function renderMalla() {
     const headerTitle = document.querySelector("header h1");
     headerTitle.innerHTML = `
         Malla Interactiva - Ingeniería Civil Industrial<br>
-        ${approvedCount}/${totalCourses} ramos aprobados<br>
-        ${credits} créditos aprobados
+        ${approvedCount}/${totalCourses} Ramos aprobados<br>
+        ${credits} Créditos aprobados
     `;
 
     mallaContainer.innerHTML = "";
