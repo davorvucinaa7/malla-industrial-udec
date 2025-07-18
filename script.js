@@ -255,7 +255,7 @@ function listarRequisitosFaltantes(course) {
     } else if (faltanRamos.length > 0) {
         mensaje += ` Primero debes aprobar: ${faltanRamos.join(", ")}.`;
     } else if (faltanCreditos !== null && faltanSemestres) {
-        mensaje += ` Primero debes aprobar ${faltanSemestres} y ${faltanCreditos} créditos más.`;
+        mensaje += ` Tienes que aprobar ${faltanSemestres}.`;
     } else if (faltanCreditos !== null) {
         mensaje += ` Te faltan ${faltanCreditos} créditos por aprobar.`;
     } else if (faltanSemestres) {
