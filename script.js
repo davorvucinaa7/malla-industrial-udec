@@ -140,7 +140,7 @@ const malla = [
             {
                 semester: "11º Semestre",
                 courses: [
-                    { code: "580695", name: "Memoria de Título", credits: 20, prereqs: "ALL" }
+                    { code: "580695", name: "Memoria de Título", credits: 20, prereqs: [{ type: "memoria" }] }
                 ]
             }
         ]
@@ -184,15 +184,20 @@ function approvedSemesters() {
     return count;
 }
 
+function contarRamosPendientes() {
+    let pendientes = 0;
+    malla.forEach(year =>
+        year.semesters.forEach(sem =>
+            sem.courses.forEach(course => {
+                if (!isApproved(course.code)) pendientes++;
+            })
+        )
+    );
+    return pendientes;
+}
+
 function canUnlock(course) {
     if (!course.prereqs || course.prereqs.length === 0) return true;
-    if (course.prereqs === "ALL") {
-        return malla.every(year =>
-            year.semesters.every(sem =>
-                sem.courses.every(c => isApproved(c.code))
-            )
-        );
-    }
     return course.prereqs.every(prereq => {
         if (typeof prereq === "string") {
             return isApproved(prereq);
@@ -200,6 +205,8 @@ function canUnlock(course) {
             return totalCredits() >= prereq.value;
         } else if (prereq.type === "semester") {
             return approvedSemesters() >= prereq.value;
+        } else if (prereq.type === "memoria") {
+            return contarRamosPendientes() <= 1;
         }
         return false;
     });
@@ -207,7 +214,7 @@ function canUnlock(course) {
 
 function toggleCourse(course) {
     if (!canUnlock(course)) {
-        alert("Este ramo está bloqueado. Primero debes aprobar los prerrequisitos.");
+        alert(listarRequisitosFaltantes(course));
         return;
     }
     if (!progress[course.code]) {
@@ -219,6 +226,47 @@ function toggleCourse(course) {
     }
     saveProgress();
     renderMalla();
+}
+
+function listarRequisitosFaltantes(course) {
+    let faltanRamos = [];
+    let faltanCreditos = null;
+    let faltanSemestres = null;
+
+    course.prereqs.forEach(prereq => {
+        if (typeof prereq === "string" && !isApproved(prereq)) {
+            faltanRamos.push(buscarNombreRamo(prereq));
+        } else if (prereq.type === "credits" && totalCredits() < prereq.value) {
+            faltanCreditos = prereq.value - totalCredits();
+        } else if (prereq.type === "semester" && approvedSemesters() < prereq.value) {
+            faltanSemestres = prereq.value - approvedSemesters();
+        } else if (prereq.type === "memoria" && contarRamosPendientes() > 1) {
+            faltanRamos.push(`${contarRamosPendientes()} ramos pendientes`);
+        }
+    });
+
+    let mensaje = "No puedes inscribir este ramo.";
+    if (faltanRamos.length > 0 && faltanCreditos !== null) {
+        mensaje += ` Primero debes aprobar: ${faltanRamos.join(", ")} y alcanzar ${faltanCreditos} créditos aprobados.`;
+    } else if (faltanRamos.length > 0) {
+        mensaje += ` Primero debes aprobar: ${faltanRamos.join(", ")}.`;
+    } else if (faltanCreditos !== null) {
+        mensaje += ` Te faltan ${faltanCreditos} créditos por aprobar.`;
+    } else if (faltanSemestres !== null) {
+        mensaje += ` Primero debes aprobar ${faltanSemestres} semestre(s).`;
+    }
+    return mensaje;
+}
+
+function buscarNombreRamo(code) {
+    for (let year of malla) {
+        for (let sem of year.semesters) {
+            for (let course of sem.courses) {
+                if (course.code === code) return `${course.name}`;
+            }
+        }
+    }
+    return code;
 }
 
 function renderMalla() {
@@ -241,8 +289,8 @@ function renderMalla() {
     const headerTitle = document.querySelector("header h1");
     headerTitle.innerHTML = `
         Malla Interactiva - Ingeniería Civil Industrial<br>
-        ${approvedCount}/${totalCourses} Ramos aprobados<br>
-        ${credits} Créditos aprobados
+        ${approvedCount}/${totalCourses} ramos aprobados<br>
+        ${credits} créditos aprobados
     `;
 
     mallaContainer.innerHTML = "";
@@ -283,6 +331,8 @@ function renderMalla() {
 
                 if (canUnlock(course)) {
                     div.addEventListener("click", () => toggleCourse(course));
+                } else {
+                    div.addEventListener("click", () => alert(listarRequisitosFaltantes(course)));
                 }
 
                 grid.appendChild(div);
