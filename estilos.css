@@ -76,17 +76,17 @@ h3 {
 }
 
 .course {
-    background: #90a4ae;
-    border: 2px solid #607d8b;
+    background: #90a4ae; /* 🔥 Gris azulado uniforme */
+    border: 2px solid #607d8b; /* Borde más oscuro */
     border-radius: 8px;
     padding: 10px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: bold;
-    color: white;
+    color: white; /* 🔥 Texto blanco para contraste */
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    min-height: 100px;
+    min-height: 100px; /* Altura mínima para alinear nombre y créditos */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -97,13 +97,13 @@ h3 {
 }
 
 .course.in-progress {
-    background: #4DB6AC;
+    background: #4DB6AC; /* Verde turquesa (Inscrita) */
     color: white;
     border-color: #00796B;
 }
 
 .course.approved {
-    background: #FF7043;
+    background: #FF7043; /* Naranja (Aprobada) */
     color: white;
     border-color: #E64A19;
 }
@@ -127,7 +127,7 @@ h3 {
     color: white;
 }
 
-/* Modal Felicitación */
+/* 🎉 Modal Felicitación */
 .modal {
     display: none;
     position: fixed;
@@ -176,3 +176,4 @@ h3 {
     from { transform: scale(0.8); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
+
