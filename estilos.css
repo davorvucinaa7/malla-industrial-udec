@@ -6,7 +6,7 @@ body {
 }
 
 .header-container {
-    position: sticky; /* Hace que header + leyenda queden fijos */
+    position: sticky; /* Header + leyenda quedan fijos */
     top: 0;
     z-index: 20;
 }
@@ -76,17 +76,17 @@ h3 {
 }
 
 .course {
-    background: #90a4ae; /* 🔥 Gris azulado uniforme */
-    border: 2px solid #607d8b; /* Borde más oscuro */
+    background: #90a4ae;
+    border: 2px solid #607d8b;
     border-radius: 8px;
     padding: 10px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: bold;
-    color: white; /* 🔥 Texto blanco para contraste */
+    color: white;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    min-height: 100px; /* Altura mínima para alinear nombre y créditos */
+    min-height: 100px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -97,20 +97,20 @@ h3 {
 }
 
 .course.in-progress {
-    background: #4DB6AC; /* Verde turquesa (Inscrita) */
+    background: #4DB6AC;
     color: white;
     border-color: #00796B;
 }
 
 .course.approved {
-    background: #FF7043; /* Naranja (Aprobada) */
+    background: #FF7043;
     color: white;
     border-color: #E64A19;
 }
 
 .course.locked {
-    opacity: 0.6;            /* 🔥 Atenuado para bloqueados */
-    cursor: not-allowed;     /* 🔒 Cursor bloqueado */
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .course:not(.locked):hover {
@@ -127,7 +127,7 @@ h3 {
     color: white;
 }
 
-/* 🎉 Modal Felicitación */
+/* Modal Felicitación */
 .modal {
     display: none;
     position: fixed;
@@ -172,7 +172,6 @@ h3 {
     background: #01579b;
 }
 
-/* 🎯 Animación modal */
 @keyframes popUp {
     from { transform: scale(0.8); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
