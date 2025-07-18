@@ -226,6 +226,7 @@ function toggleCourse(course) {
     }
     saveProgress();
     renderMalla();
+    setTimeout(checkGraduation, 100);
 }
 
 function listarRequisitosFaltantes(course) {
@@ -251,11 +252,11 @@ function listarRequisitosFaltantes(course) {
 
     let mensaje = "No puedes inscribir este ramo.";
     if (faltanRamos.length > 0 && faltanCreditos !== null) {
-        mensaje += ` Te falta aprobar: ${faltanRamos.join(", ")} y ${faltanCreditos} créditos más.`;
+        mensaje += ` Primero debes aprobar: ${faltanRamos.join(", ")} y alcanzar ${faltanCreditos} créditos aprobados.`;
     } else if (faltanRamos.length > 0) {
         mensaje += ` Primero debes aprobar: ${faltanRamos.join(", ")}.`;
     } else if (faltanCreditos !== null && faltanSemestres) {
-        mensaje += ` Tienes que tener aprobados ${faltanSemestres}.`;
+        mensaje += ` Primero debes aprobar ${faltanSemestres} y alcanzar ${faltanCreditos} créditos aprobados.`;
     } else if (faltanCreditos !== null) {
         mensaje += ` Te faltan ${faltanCreditos} créditos por aprobar.`;
     } else if (faltanSemestres) {
@@ -273,6 +274,45 @@ function buscarNombreRamo(code) {
         }
     }
     return code;
+}
+
+function checkGraduation() {
+    const total = malla.flatMap(y => y.semesters.flatMap(s => s.courses)).length;
+    const aprobados = Object.values(progress).filter(state => state === "approved").length;
+    if (aprobados === total) {
+        lanzarConfetti();
+        mostrarModalFelicitacion();
+    }
+}
+
+function lanzarConfetti() {
+    const duration = 5 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+
+    function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) {
+            return clearInterval(interval);
+        }
+        const particleCount = 50 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, {
+            particleCount,
+            origin: { x: randomInRange(0, 1), y: Math.random() - 0.2 }
+        }));
+    }, 250);
+}
+
+function mostrarModalFelicitacion() {
+    document.getElementById("felicitacionModal").style.display = "block";
+}
+
+function cerrarModal() {
+    document.getElementById("felicitacionModal").style.display = "none";
 }
 
 function renderMalla() {
@@ -295,8 +335,8 @@ function renderMalla() {
     const headerTitle = document.querySelector("header h1");
     headerTitle.innerHTML = `
         Malla Interactiva - Ingeniería Civil Industrial<br>
-        ${approvedCount}/${totalCourses} Ramos aprobados<br>
-        ${credits} Créditos aprobados
+        ${approvedCount}/${totalCourses} ramos aprobados<br>
+        ${credits} créditos aprobados
     `;
 
     mallaContainer.innerHTML = "";
@@ -347,16 +387,5 @@ function renderMalla() {
     });
 }
 
-function checkGraduation() {
-    const total = malla.flatMap(y => y.semesters.flatMap(s => s.courses)).length;
-    const aprobados = Object.values(progress).filter(state => state === "approved").length;
-    if (aprobados === total) {
-        setTimeout(() => {
-            alert("🎉 ¡Felicitaciones, ya eres Ingeniero Civil Industrial!");
-        }, 300);
-    }
-}
-
 renderMalla();
-setTimeout(checkGraduation, 100);
 
