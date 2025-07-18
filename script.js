@@ -239,7 +239,11 @@ function listarRequisitosFaltantes(course) {
         } else if (prereq.type === "credits" && totalCredits() < prereq.value) {
             faltanCreditos = prereq.value - totalCredits();
         } else if (prereq.type === "semester" && approvedSemesters() < prereq.value) {
-            faltanSemestres = prereq.value - approvedSemesters();
+            if (prereq.value === 8) {
+                faltanSemestres = "los 8 primeros semestres de la carrera";
+            } else {
+                faltanSemestres = `${prereq.value} semestre(s)`;
+            }
         } else if (prereq.type === "memoria" && contarRamosPendientes() > 1) {
             faltanRamos.push(`${contarRamosPendientes()} ramos pendientes`);
         }
@@ -250,10 +254,12 @@ function listarRequisitosFaltantes(course) {
         mensaje += ` Primero debes aprobar: ${faltanRamos.join(", ")} y alcanzar ${faltanCreditos} créditos aprobados.`;
     } else if (faltanRamos.length > 0) {
         mensaje += ` Primero debes aprobar: ${faltanRamos.join(", ")}.`;
+    } else if (faltanCreditos !== null && faltanSemestres) {
+        mensaje += ` Primero debes aprobar ${faltanSemestres} y alcanzar ${faltanCreditos} créditos aprobados.`;
     } else if (faltanCreditos !== null) {
         mensaje += ` Te faltan ${faltanCreditos} créditos por aprobar.`;
-    } else if (faltanSemestres !== null) {
-        mensaje += ` Primero debes aprobar ${faltanSemestres} semestre(s).`;
+    } else if (faltanSemestres) {
+        mensaje += ` Primero debes aprobar ${faltanSemestres}.`;
     }
     return mensaje;
 }
@@ -329,12 +335,7 @@ function renderMalla() {
                     div.classList.add("locked");
                 }
 
-                if (canUnlock(course)) {
-                    div.addEventListener("click", () => toggleCourse(course));
-                } else {
-                    div.addEventListener("click", () => alert(listarRequisitosFaltantes(course)));
-                }
-
+                div.addEventListener("click", () => toggleCourse(course));
                 grid.appendChild(div);
             });
 
