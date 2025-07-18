@@ -358,4 +358,5 @@ function checkGraduation() {
 }
 
 renderMalla();
-checkGraduation();
+setTimeout(checkGraduation, 100);
+
