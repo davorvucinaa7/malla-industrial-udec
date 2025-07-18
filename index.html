@@ -5,18 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Malla Interactiva - Ing. Civil Industrial</title>
     <link rel="stylesheet" href="estilos.css" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="header-container">
-        <header>
-            <h1>Malla Interactiva - Ingeniería Civil Industrial</h1>
-        </header>
-        <div class="legend">
-            <span class="legend-item approved"></span> Aprobada
-            <span class="legend-item in-progress"></span> Inscrita
+    <header>
+        <h1>Malla Interactiva - Ingeniería Civil Industrial</h1>
+    </header>
+    <main id="malla"></main>
+
+    <!-- Modal Felicitación -->
+    <div id="felicitacionModal" class="modal">
+        <div class="modal-content">
+            <h2>🎉 ¡Felicitaciones!</h2>
+            <p>Ya eres Ingeniero Civil Industrial</p>
+            <button onclick="cerrarModal()">Cerrar</button>
         </div>
     </div>
-    <main id="malla"></main>
 </body>
 </html>
