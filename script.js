@@ -347,4 +347,15 @@ function renderMalla() {
     });
 }
 
+function checkGraduation() {
+    const total = malla.flatMap(y => y.semesters.flatMap(s => s.courses)).length;
+    const aprobados = Object.values(progress).filter(state => state === "approved").length;
+    if (aprobados === total) {
+        setTimeout(() => {
+            alert("🎉 ¡Felicitaciones, ya eres Ingeniero Civil Industrial!");
+        }, 300);
+    }
+}
+
 renderMalla();
+checkGraduation();
