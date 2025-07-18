@@ -252,11 +252,11 @@ function listarRequisitosFaltantes(course) {
 
     let mensaje = "No puedes inscribir este ramo.";
     if (faltanRamos.length > 0 && faltanCreditos !== null) {
-        mensaje += ` Primero debes aprobar: ${faltanRamos.join(", ")} y alcanzar ${faltanCreditos} créditos aprobados.`;
+        mensaje += ` Primero debes aprobar: ${faltanRamos.join(", ")} y  ${faltanCreditos} créditos más.`;
     } else if (faltanRamos.length > 0) {
         mensaje += ` Primero debes aprobar: ${faltanRamos.join(", ")}.`;
     } else if (faltanCreditos !== null && faltanSemestres) {
-        mensaje += ` Primero debes aprobar ${faltanSemestres} y alcanzar ${faltanCreditos} créditos aprobados.`;
+        mensaje += ` Tienes que aprobar ${faltanSemestres} .`;
     } else if (faltanCreditos !== null) {
         mensaje += ` Te faltan ${faltanCreditos} créditos por aprobar.`;
     } else if (faltanSemestres) {
@@ -335,8 +335,8 @@ function renderMalla() {
     const headerTitle = document.querySelector("header h1");
     headerTitle.innerHTML = `
         Malla Interactiva - Ingeniería Civil Industrial<br>
-        ${approvedCount}/${totalCourses} ramos aprobados<br>
-        ${credits} créditos aprobados
+        ${approvedCount}/${totalCourses} Ramos aprobados<br>
+        ${credits} Créditos aprobados
     `;
 
     mallaContainer.innerHTML = "";
